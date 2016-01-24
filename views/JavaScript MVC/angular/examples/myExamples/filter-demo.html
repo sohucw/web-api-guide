@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>filter demo</title>
+    <link rel="stylesheet" href="../../../../../platform/css/bootstrap/css/bootstrap.css" type="text/css"/>
+    <style type="text/css">
+      body{
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div ng-non-bindable>
+      <p>用法：</p>
+      <p>In HTML Template Binding：
+        {{ filter_expression | filter:expression:comparator }} </p>
+      <p>In JavaScript：
+        $filter('filter')(array, expression, comparator) </p>
+      <p>expression 可以是string，object或function；comparator 为function，true或false(undefined)</p>
+    </div>
+    <hr>
+    <div ng-init="friends = [{name:'John', phone:'555-1276'},
+{name:'Mary', phone:'800-BIG-MARY'},
+{name:'Mike', phone:'555-4321'},
+{name:'Adam', phone:'555-5678'},
+{name:'Julie', phone:'555-8765'},
+{name:'Juliette', phone:'555-5678'}]"></div>
+    <div style="margin:10px 0;">expression 是string的情况</div>
+    Search: <input ng-model="searchText">
+    <table id="searchTextResults">
+      <tr><th>Name</th><th>Phone</th></tr>
+      <tr ng-repeat="friend in friends| filter:searchText">
+        <td>{{friend.name}}</td>
+        <td>{{friend.phone}}</td>
+      </tr>
+    </table>
+    <hr>
+    <div style="margin:10px 0;">expression 是object的情况</div>
+    Any: <input ng-model="search.$"> <br>
+    Name only <input ng-model="search.name"><br>
+    Phone only <input ng-model="search.phone"><br>
+
+    设置了comparator为true表示全字符匹配，设为false或undefined为模糊匹配。<br />
+    Equality <input type="checkbox" ng-model="strict"><br>
+    <table id="searchObjResults">
+      <tr><th>Name</th><th>Phone</th></tr>
+      <tr ng-repeat="friend in friends| filter:search:strict">
+        <td>{{friend.name}}</td>
+        <td>{{friend.phone}}</td>
+      </tr>
+    </table>
+    <script type="text/javascript" src="../../angular.js"></script>
+
+    <hr>
+    <p>例子代码</p>
+    <pre ng-non-bindable>
+&lt;!DOCTYPE html&gt;
+&lt;html ng-app&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;filter demo&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../../../../../platform/css/bootstrap/css/bootstrap.css" type="text/css"/&gt;
+    &lt;style type="text/css"&gt;
+      body{
+        padding: 10px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div ng-non-bindable&gt;
+      &lt;p&gt;用法：&lt;/p&gt;
+      &lt;p&gt;In HTML Template Binding：
+        {{ filter_expression | filter:expression:comparator }} &lt;/p&gt;
+      &lt;p&gt;In JavaScript：
+        $filter('filter')(array, expression, comparator) &lt;/p&gt;
+      &lt;p&gt;expression 可以是string，object或function；comparator 为function，true或false(undefined)&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div ng-init="friends = [{name:'John', phone:'555-1276'},
+{name:'Mary', phone:'800-BIG-MARY'},
+{name:'Mike', phone:'555-4321'},
+{name:'Adam', phone:'555-5678'},
+{name:'Julie', phone:'555-8765'},
+{name:'Juliette', phone:'555-5678'}]"&gt;&lt;/div&gt;
+    &lt;div style="margin:10px 0;"&gt;expression 是string的情况&lt;/div&gt;
+    Search: &lt;input ng-model="searchText"&gt;
+    &lt;table id="searchTextResults"&gt;
+      &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Phone&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr ng-repeat="friend in friends| filter:searchText"&gt;
+        &lt;td&gt;{{friend.name}}&lt;/td&gt;
+        &lt;td&gt;{{friend.phone}}&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;hr&gt;
+    &lt;div style="margin:10px 0;"&gt;expression 是object的情况&lt;/div&gt;
+    Any: &lt;input ng-model="search.$"&gt; &lt;br&gt;
+    Name only &lt;input ng-model="search.name"&gt;&lt;br&gt;
+    Phone only &lt;input ng-model="search.phone"&gt;&lt;br&gt;
+
+    设置了comparator为true表示全字符匹配，设为false或undefined为模糊匹配。&lt;br /&gt;
+    Equality &lt;input type="checkbox" ng-model="strict"&gt;&lt;br&gt;
+    &lt;table id="searchObjResults"&gt;
+      &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Phone&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr ng-repeat="friend in friends| filter:search:strict"&gt;
+        &lt;td&gt;{{friend.name}}&lt;/td&gt;
+        &lt;td&gt;{{friend.phone}}&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;script type="text/javascript" src="../../angular.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+    </pre>
+  </body>
+</html>

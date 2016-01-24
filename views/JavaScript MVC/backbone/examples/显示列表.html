@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>基于backbone显示列表</title>
+    <style>
+      body{
+        padding:10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <ul id="list">
+
+      </ul>
+    </div>
+    <script type="text/javascript" src="../../../../platform/javascript/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../../../../platform/javascript/jquery-plugin/jsrender/jsrender.js"></script>
+
+    <script type="text/javascript" src="./underscore-min.js"></script>
+    <script type="text/javascript" src="./backbone-min.js"></script>
+    <script type="text/javascript">
+      var EB_View = {};
+      (function(view) {
+        var pub = {
+          list : {
+            //Model:
+            Student: Backbone.Model.extend({
+              //默认值
+              defaults: function() {
+                return{
+                  name: "XXX"
+                };
+              },
+              //初始化的时候判断，如果设置的属性值非法就设为默认值
+              initialize: function() {
+                if (!this.get("name")) {
+                  this.set({"name": this.defaults().name});
+                }
+              }
+            }),
+            //Collection:Model的集合，即所有学生的集合
+            Students: Backbone.Collection.extend({
+              
+            }),
+            //View:这个视图表示$("#content")
+            AppView: Backbone.View.extend({
+              el: $("#list"),
+              initialize: function() {
+                this.template = $.templates("#item-template");
+                //Collection中增加一个Model就触发add事件
+                var studentsData = this.options.studentsData;
+                this.collection.add(studentsData);
+                this.render();
+              },
+              render: function() {
+                this.$el.html(this.template.render(this.collection.toJSON()));
+              }
+            })
+          },
+          initPage: function() {
+            //创建View
+            var studentsData = [{
+                name: '',
+                gender: '0',
+                age: 23
+              }, {
+                name: 'name2',
+                gender: '1',
+                age: 45
+              }];
+            var collection = new this.list.Students();
+            collection.model = this.list.Student;
+            var App = new this.list.AppView({studentsData: studentsData,collection: collection});
+          }
+        };
+        view.list = pub;
+      })(EB_View);
+
+      $(function() {
+        EB_View.list.initPage();
+      });
+    </script>
+  </body>
+</html>
+
+<script id="item-template" type="text/x-jsrender">
+  {{for #data}}
+  <li>
+  <em> Name:</em> {{:name}} 
+  </li>
+  {{/for}}
+</script>
